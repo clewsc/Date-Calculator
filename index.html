@@ -310,6 +310,21 @@ function copyOutput() {
   setTimeout(() => copiedText.style.display = 'none', 1500);
 }
 </script>
+<script>
+function addBetweenModeSpacing() {
+  const date1 = document.getElementById('date1');
+  const endLabel = document.querySelector('#betweenMode label[for="date2"]');
+  if (date1 && endLabel) {
+    // Add spacing after the input
+    endLabel.style.marginTop = "12px"; // adjust as needed
+  }
+}
+
+// Call it once the page loads
+window.addEventListener('load', () => {
+  addBetweenModeSpacing();
+});
+</script>
 
 </body>
 </html>
