@@ -201,9 +201,12 @@ button.calculate { width: 100%; font-size: 0.85rem; margin-top: 12px; }
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-flatpickr("#startDate", { dateFormat: "Y-m-d", disableMobile: false });
-flatpickr("#date1", { dateFormat: "Y-m-d", disableMobile: false });
-flatpickr("#date2", { dateFormat: "Y-m-d", disableMobile: false });
+if (window.innerWidth > 480) {  // desktop only
+  flatpickr("#startDate", { dateFormat: "Y-m-d", disableMobile: false });
+  flatpickr("#date1", { dateFormat: "Y-m-d", disableMobile: false });
+  flatpickr("#date2", { dateFormat: "Y-m-d", disableMobile: false });
+}
+
 
 function toggleMode() {
   const mode = document.getElementById('mode').value;
