@@ -312,19 +312,32 @@ function copyOutput() {
 </script>
 <script>
 function addBetweenModeSpacing() {
-  const date1 = document.getElementById('date1');
   const endLabel = document.querySelector('#betweenMode label[for="date2"]');
-  if (date1 && endLabel) {
-    // Add spacing after the input
-    endLabel.style.marginTop = "12px"; // adjust as needed
+  if (endLabel) {
+    endLabel.style.marginTop = "12px"; // Adjust spacing as desired
   }
 }
 
-// Call it once the page loads
+// Apply spacing when the page loads
 window.addEventListener('load', () => {
   addBetweenModeSpacing();
 });
+
+// Also apply spacing whenever the mode changes
+function toggleMode() {
+  const mode = document.getElementById('mode').value;
+  document.getElementById('addMode').style.display = mode === 'add' ? 'block' : 'none';
+  document.getElementById('betweenMode').style.display = mode === 'between' ? 'block' : 'none';
+  document.getElementById('outputContainer').style.display = 'none';
+  document.getElementById('summary').textContent = '';
+
+  // Dynamically adjust spacing if switching to between mode
+  if (mode === 'between') {
+    addBetweenModeSpacing();
+  }
+}
 </script>
+
 
 </body>
 </html>
