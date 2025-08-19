@@ -124,7 +124,18 @@ button.calculate { width: 100%; font-size: 0.85rem; margin-top: 12px; }
   #includeEnd {
     margin-left: 6px; /* adjust as desired */
   }
-}
+  /* Make mobile date fields same width as other inputs */
+  #startDate,
+  #date1,
+  #date2 {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
 
 
 @media (min-width: 481px) { #date1 { margin-bottom: 12px; } }
