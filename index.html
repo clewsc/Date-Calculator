@@ -94,15 +94,38 @@ button.copy-btn {
 button.calculate { width: 100%; font-size: 0.85rem; margin-top: 12px; }
 
 @media (max-width: 480px) {
-  input, select, button { font-size: 1rem; padding: 8px 10px; }
+  input, select, button {
+    font-size: 1rem;
+    padding: 8px 10px;
+  }
+
   label { margin-top: 14px; }
+
+  /* Output container adjustments stay the same */
   .output-container { flex-wrap: wrap; }
   #output { flex: 1 1 100%; margin-right: 0; margin-bottom: 5px; }
   #copiedText { order: 1; margin: 0 5px 5px 0; }
   button.copy-btn { order: 2; flex: 0 0 auto; }
   button.calculate { padding: 10px 15px; font-size: 1rem; }
-  #startDate, #date1, #date2, #mode { width: calc(100% - 12px); margin-left: 6px; margin-right: 6px; box-sizing: border-box; }
+
+  /* Mobile-only date field width fix (reinstate prior fix) */
+  #startDate,
+  #date1,
+  #date2,
+  #mode {
+    width: calc(100% - 12px);
+    margin-left: 6px;
+    margin-right: 6px;
+    box-sizing: border-box;
+  }
+
+  /* Shift Include start/end day checkboxes slightly right */
+  #includeStart,
+  #includeEnd {
+    margin-left: 6px; /* adjust as desired */
+  }
 }
+
 
 @media (min-width: 481px) { #date1 { margin-bottom: 12px; } }
 
