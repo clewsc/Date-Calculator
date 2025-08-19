@@ -1,2 +1,2 @@
 Calculate "End Date" from a start date with addition of X number of days, weeks, or months. Users may choose 28-day months or calendar months. Allows easy copying of output.
-As of version 1.1, can also calculate days (weeks + days) between two dates.
+As of version 3, can also calculate days (weeks + days) between two dates.
