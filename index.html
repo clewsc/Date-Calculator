@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Date Calculator</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.calculator-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 400px;
+  margin: auto;
+}
+
+#modeContainer { 
+  padding-top: 12px; 
+  margin-bottom: 12px; 
+}
+
+label {
+  font-size: 0.7rem;
+  display: block;
+}
+
+input, select, button {
+  font-size: 0.9rem;
+  padding: 4px 6px;
+  margin-top: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#addMode #startDate { 
+  margin-bottom: 8px; 
+}
+
+.checkbox-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.checkbox-inline input[type="checkbox"] { 
+  width: auto; 
+  height: auto; 
+  margin: 0; 
+}
+
+#summary {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 12px 0;
+  text-align: left;
+}
+
+button.calculate { 
+  width: 100%; 
+  font-size: 0.85rem; 
+  margin-top: 12px; 
+}
+
+/* Output container: input + button + tooltip */
+#outputContainer {
+  display: none;           /* hidden initially, shown by JS */
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  position: relative;      /* necessary for absolute tooltip */
+}
+
+#output {
+  flex: 1 1 auto;
+  font-size: 0.9rem;
+  padding: 4px 6px;
+}
+
+button.copy-btn {
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  width: auto;
+}
+
+#copiedText {
+  position: absolute;
+  bottom: 100%;            /* above the button/input */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: green;
+  white-space: nowrap;
+  pointer-events: none;
+  margin-bottom: 4px;
+  opacity: 0;              /* hidden initially */
+  transition: opacity 0.3s ease-in-out;
+  z-index: 10;
+}
+
+#copiedText.show {
+  opacity: 1;
+}
+
+/* Flatpickr input styling */
+.flatpickr-input {
+  width: 100% !important;
+  box-sizing: border-box;
+  padding: 4px 6px !important;
+  font-size: 0.9rem !important;
+}
+
+input[type="date"] {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 6px 8px;
+  min-height: 38px;        
+  line-height: 1.4;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Footer links */
+.footer-links {
+  font-size: 0.75rem;
+  color: #888;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.footer-links a {
+  color: #555;
+  text-decoration: none;
+  margin: 0 4px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Modals */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.5); 
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 350px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translateY(-10px);
+  animation: slideIn 0.25s ease-out forwards;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content .close {
+  float: right;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.modal-content input, 
+.modal-content textarea, 
+.modal-content button {
+  width: 100%;
+  padding: 6px 8px;
+  margin: 6px 0;
+  box-sizing: border-box;
+}
+
+.modal-content button {
+  margin-top: 8px;
+}
+
+/* Desktop-specific adjustments */
+@media (min-width: 481px) {
+  #date1 { margin-bottom: 12px; }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 480px) {
+
+  /* Inputs/buttons font and padding */
+  input, select, button {
+	font-size: 1rem;
+	padding: 8px 10px;
+	box-sizing: border-box;
+  }
+
+  label { margin-top: 14px; }
+
+  /* Date fields: consistent width, native picker */
+  #startDate, #date1, #date2, #mode, input[type="date"] {
+	width: 100%;
+	padding: 6px 8px;
+	min-height: 40px;
+	line-height: 1.4;
+	appearance: none;
+	-webkit-appearance: none;
+	font-size: 1rem;
+  }
+
+  /* Checkbox alignment */
+  .checkbox-inline {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9rem;
+	margin-top: 12px;
+  }
+
+  /* Output container spacing */
+  #outputContainer {
+	gap: 6px;
+  }
+
+  #output {
+	flex: 1;
+	padding: 6px 8px;
+	font-size: 1rem;
+  }
+
+  button.copy-btn {
+	flex: 0 0 auto;
+	padding: 4px 10px;
+  }
+
+  /* Calculate button full width */
+  button.calculate {
+	width: 100%;
+	font-size: 1rem;
+	padding: 10px 15px;
+	margin-top: 12px;
+  }
+
+  /* Footer links smaller on mobile */
+  .footer-links {
+	font-size: 0.7rem;
+  }
+
+  /* Mobile modal adjustments */
+  .modal-content {
+	margin: 5% 10%;   /* top/bottom 5%, horizontal 10% */
+	max-width: none;  /* allow width to adjust to margins */
+	padding: 16px;    /* smaller padding for mobile */
+	border-radius: 14px;
+	box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+
+  .modal-content label {
+	margin-top: 12px;
+	margin-bottom: 4px;
+	font-size: 1rem;
+	font-weight: 500;
+  }
+
+  .modal-content input,
+  .modal-content textarea,
+  .modal-content button {
+	margin-top: 6px;
+	margin-bottom: 12px;
+  }
+
+  .modal-content button {
+	padding: 12px 16px;
+	font-size: 1rem;
+	border-radius: 8px;
+  }
+
+  .modal-content p {
+	font-size: 0.95rem;
+	line-height: 1.5;
+  }
+
+  .modal {
+	background-color: rgba(0,0,0,0.6);
+  }
+
+}
+
+/* Modal animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(0); }
+}
+
+</style>
+</head>
+<body>
+
+<h2>Date Calculator</h2>
+
+<div class="calculator-box">
+
+  <div id="modeContainer">
+	<label for="mode">Select Calculation Mode:</label>
+	<select id="mode" onchange="toggleMode()">
+	  <option value="add" selected>Add Days/Weeks/Months to Date</option>
+	  <option value="between">Duration Between Dates</option>
+	</select>
+  </div>
+
+  <div id="addMode">
+	<label for="startDate">Start Date:</label>
+	<input type="date" id="startDate" placeholder="Select a date">
+
+	<label for="duration">Duration:</label>
+	<input type="number" id="duration" placeholder="Enter number" min="1">
+
+	<select id="unit">
+	  <option value="days" selected>Days</option>
+	  <option value="weeks">Weeks</option>
+	  <option value="months">Months</option>
+	</select>
+
+	<label class="checkbox-inline"><input type="checkbox" id="includeStart"> Include start date</label>
+
+	<select id="monthType">
+	  <option value="28">28-day month</option>
+	  <option value="calendar">Calendar month</option>
+	</select>
+
+	<select id="format">
+	  <option value="dayMon" selected>Day Mon</option>
+	  <option value="ddmmyyyy">DD/MM/YYYY</option>
+	  <option value="iso">ISO YYYY-MM-DD</option>
+	</select>
+  </div>
+
+  <div id="betweenMode" style="display: none;">
+	<label for="date1">Start Date:</label>
+	<input type="date" id="date1" placeholder="Select first date">
+
+	<label for="date2">End Date:</label>
+	<input type="date" id="date2" placeholder="Select second date">
+
+	<label class="checkbox-inline"><input type="checkbox" id="includeEnd"> Include end date</label>
+  </div>
+
+<div class="output-container" id="outputContainer" style="display: none;">
+	<input type="text" id="output" readonly>
+	<span id="copiedText">Copied</span>
+	<button class="copy-btn" onclick="copyOutput()">Copy</button>
+  </div>
+
+  <div id="summary"></div>
+
+  <button class="calculate" onclick="calculate()">Calculate</button>
+  
+<div class="footer-links">
+	<span>ℹ️ <a href="javascript:void(0)" onclick="openModal('aboutModal')">About</a>  
+	🪲<a href="javascript:void(0)" onclick="openModal('reportModal')">Report a bug</a></span>
+  </div>
+
+<!-- About Modal -->
+  <div id="aboutModal" class="modal">
+	<div class="modal-content">
+	  <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+	  <h3>About</h3>
+	  <p>This calculator helps you add days/weeks/months to a date or find the duration between dates. You can also choose a standard 28-day month or calendar month, specify date output format, and easily copy the output.</p>
+	</div>
+  </div>
+
+<!-- Report Bug Modal -->
+  <div id="reportModal" class="modal">
+	<div class="modal-content">
+	  <span class="close" onclick="closeModal('reportModal')">&times;</span>
+	  <h3>Report a Bug</h3>
+	  <form name="reportBug" method="POST" data-netlify="true" id="reportForm">
+		<input type="hidden" name="form-name" value="reportBug">
+		<label for="name">Name (optional):</label>
+		<input type="text" id="name" name="name" placeholder="Your name">
+		<label for="message">Message:</label>
+		<textarea id="message" name="message" placeholder="Describe the bug" required></textarea>
+		<button type="submit">Submit</button>
+	  </form>
+	  <p id="formStatus" style="font-size:0.8rem; color:green; display:none;">Thank you! Your report was sent.</p>
+	</div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+if (window.innerWidth > 480) {  // desktop only
+  flatpickr("#startDate", { dateFormat: "Y-m-d", disableMobile: false });
+  flatpickr("#date1", { dateFormat: "Y-m-d", disableMobile: false });
+  flatpickr("#date2", { dateFormat: "Y-m-d", disableMobile: false });
+}
+
+// Toggle mode and also apply spacing whenever the mode changes
+function toggleMode() {
+  const mode = document.getElementById('mode').value;
+  document.getElementById('addMode').style.display = mode === 'add' ? 'block' : 'none';
+  document.getElementById('betweenMode').style.display = mode === 'between' ? 'block' : 'none';
+  document.getElementById('outputContainer').style.display = 'none';
+  document.getElementById('summary').textContent = '';
+
+  // Dynamically adjust spacing if switching to between mode
+  if (mode === 'between') {
+	addBetweenModeSpacing();
+  }
+}
+
+function formatDate(date, format) {
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const year = date.getFullYear();
+  const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  if (format === 'dayMon') return day + ' ' + monthNames[date.getMonth()];
+  if (format === 'ddmmyyyy') return `${day}/${month}/${year}`;
+  if (format === 'iso') return `${year}-${month}-${day}`;
+  return '';
+}
+
+function calculate() {
+  const mode = document.getElementById('mode').value;
+  let result = "";
+  let summary = "";
+
+  if (mode === 'add') {
+	const start = new Date(document.getElementById('startDate').value);
+	const duration = parseInt(document.getElementById('duration').value);
+	const includeStart = document.getElementById('includeStart').checked;
+	const unit = document.getElementById('unit').value;
+	const monthType = document.getElementById('monthType').value;
+	const format = document.getElementById('format').value;
+
+	if (isNaN(start.getTime()) || isNaN(duration) || duration < 1) {
+	  alert('Please select a valid start date and duration.');
+	  return;
+	}
+
+	let end = new Date(start);
+	if (unit === 'days') end.setDate(end.getDate() + duration - (includeStart ? 1 : 0));
+	else if (unit === 'weeks') end.setDate(end.getDate() + duration * 7 - (includeStart ? 1 : 0));
+	else if (unit === 'months') {
+	  if (monthType === '28') end.setDate(end.getDate() + duration * 28 - (includeStart ? 1 : 0));
+	  else {
+		end.setMonth(end.getMonth() + duration);
+		if (!includeStart) end.setDate(end.getDate() - 1);
+	  }
+	}
+
+	result = formatDate(end, format);
+	summary = `Start: ${formatDate(start, format)} | Duration: ${duration} ${unit} | End: ${result}`;
+
+  } else if (mode === 'between') {
+	const d1 = new Date(document.getElementById('date1').value);
+	const d2 = new Date(document.getElementById('date2').value);
+	const includeEnd = document.getElementById('includeEnd').checked;
+
+	if (isNaN(d1.getTime()) || isNaN(d2.getTime())) {
+	  alert('Please select valid start and end dates.');
+	  return;
+	}
+
+	let diffTime = Math.abs(d2 - d1);
+	let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+	if (includeEnd) diffDays += 1;
+
+	if (diffDays <= 6) result = `${diffDays} ${diffDays === 1 ? "day" : "days"}`;
+	else if (diffDays === 7) result = "7 days (1 week)";
+	else {
+	  const weeks = Math.floor(diffDays / 7);
+	  const daysRemainder = diffDays % 7;
+	  let breakdown = `${weeks} ${weeks === 1 ? "week" : "weeks"}`;
+	  if (daysRemainder > 0) breakdown += ` + ${daysRemainder} ${daysRemainder === 1 ? "day" : "days"}`;
+	  result = `${diffDays} days (${breakdown})`;
+	}
+
+	summary = `${d1.toDateString()} to ${d2.toDateString()} = ${result}`;
+  }
+
+  document.getElementById('output').value = result;
+  document.getElementById('outputContainer').style.display = 'flex';
+  document.getElementById('summary').textContent = summary;
+}
+
+function copyOutput() {
+  const output = document.getElementById('output');
+  output.select();
+  output.setSelectionRange(0, 99999); 
+  navigator.clipboard.writeText(output.value).then(() => {
+	const copiedText = document.getElementById('copiedText');
+	copiedText.classList.add("show");        
+	setTimeout(() => copiedText.classList.remove("show"), 1500);
+  });
+  window.getSelection().removeAllRanges();
+}
+
+function addBetweenModeSpacing() {
+  const endLabel = document.querySelector('#betweenMode label[for="date2"]');
+  if (endLabel) {
+	endLabel.style.marginTop = "12px"; 
+  }
+}
+
+window.addEventListener('load', () => {
+  addBetweenModeSpacing();
+});
+
+// Modal open/close
+function openModal(id) {
+  document.getElementById(id).style.display = 'block';
+}
+
+function closeModal(id) {
+  document.getElementById(id).style.display = 'none';
+}
+
+// Close modal if clicking outside
+window.onclick = function(event) {
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => {
+	if (event.target == modal) modal.style.display = 'none';
+  });
+}
+
+// Bug report form feedback
+document.getElementById('reportForm').addEventListener('submit', function(e){
+  const status = document.getElementById('formStatus');
+  status.style.display = 'block';       
+  setTimeout(() => status.style.display = 'none', 3000); 
+});
+</script>
+
+</body>
+</html>
