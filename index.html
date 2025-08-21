@@ -12,16 +12,17 @@ body {
   font-family: Arial, sans-serif;
   padding: 20px;
   background-color: #f9f9f9;
+  margin: 0;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px; /* slightly reduced */
 }
 
 .calculator-box {
   background-color: #fff;
-  padding: 20px;
+  padding: 16px 20px;  /* slightly reduced top/bottom padding */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   max-width: 400px;
@@ -30,7 +31,7 @@ h2 {
 }
 
 #modeContainer { 
-  padding-top: 12px; 
+  padding-top: 0;  /* remove extra padding */
   margin-bottom: 12px; 
 }
 
@@ -42,13 +43,13 @@ label {
 input, select, button {
   font-size: 0.9rem;
   padding: 4px 6px;
-  margin-top: 8px;
+  margin-top: 6px; /* slightly tighter spacing */
   width: 100%;
   box-sizing: border-box;
 }
 
 #addMode #startDate { 
-  margin-bottom: 8px; 
+  margin-bottom: 6px; 
 }
 
 .checkbox-inline {
@@ -57,7 +58,7 @@ input, select, button {
   gap: 6px;
   font-size: 0.8rem;
   color: #666;
-  margin-top: 10px;
+  margin-top: 8px;  /* tighter spacing */
 }
 
 .checkbox-inline input[type="checkbox"] { 
@@ -69,24 +70,23 @@ input, select, button {
 #summary {
   font-size: 0.8rem;
   color: #555;
-  margin: 12px 0;
+  margin: 8px 0; /* slightly tighter spacing */
   text-align: left;
 }
 
 button.calculate { 
   width: 100%; 
   font-size: 0.85rem; 
-  margin-top: 12px; 
+  margin-top: 10px; 
   border-radius: 8px;
   padding: 8px 12px;
 }
 
-/* Output container: input + button + tooltip */
 #outputContainer {
   display: none;           
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: nowrap;
   position: relative;      
 }
@@ -221,64 +221,66 @@ input[type="date"] {
 
   /* Calculator box adjustments */
   .calculator-box {
-	padding: 16px;
-	margin: 12px 6px;
-	box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    padding: 14px 16px;  /* top/bottom slightly reduced */
+    margin: 8px 6px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
   }
 
   input, select, button {
-	font-size: 1rem;
-	padding: 10px 12px;
+    font-size: 1rem;
+    padding: 10px 12px;
+    margin-top: 6px;
   }
 
-  label { margin-top: 14px; }
+  label { margin-top: 10px; }
 
   #output {
-	font-size: 1rem;
-	padding: 6px 8px;
+    font-size: 1rem;
+    padding: 6px 8px;
   }
 
   button.calculate {
-	font-size: 1.05rem;
-	padding: 12px;
+    font-size: 1.05rem;
+    padding: 12px;
+    margin-top: 8px;
   }
 
   /* Modals */
   .modal-content {
-	margin: 5% 10%;
-	max-width: none;
-	padding: 16px;
-	border-radius: 14px;
-	box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    margin: 5% 10%;
+    max-width: none;
+    padding: 16px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   }
 
   .modal-content label {
-	margin-top: 12px;
-	margin-bottom: 4px;
-	font-size: 1rem;
-	font-weight: 500;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-size: 1rem;
+    font-weight: 500;
   }
 
   .modal-content input,
   .modal-content textarea,
   .modal-content button {
-	margin-top: 6px;
-	margin-bottom: 12px;
+    margin-top: 6px;
+    margin-bottom: 12px;
   }
 
   .modal-content button {
-	padding: 12px 16px;
-	font-size: 1rem;
-	border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
   }
 
   .modal-content p {
-	font-size: 0.95rem;
-	line-height: 1.5;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .modal {
-	background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.6);
   }
 }
 
@@ -301,96 +303,96 @@ input[type="date"] {
 <div class="calculator-box">
 
   <div id="modeContainer">
-	<label for="mode">Select Calculation Mode:</label>
-	<select id="mode" onchange="toggleMode()">
-	  <option value="add" selected>Add Days/Weeks/Months to Date</option>
-	  <option value="between">Duration Between Dates</option>
-	</select>
+    <label for="mode">Select Calculation Mode:</label>
+    <select id="mode" onchange="toggleMode()">
+      <option value="add" selected>Add Days/Weeks/Months to Date</option>
+      <option value="between">Duration Between Dates</option>
+    </select>
   </div>
 
   <div id="addMode">
-	<label for="startDate">Start Date:</label>
-	<input type="date" id="startDate" placeholder="Select a date">
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" placeholder="Select a date">
 
-	<label for="duration">Duration:</label>
-	<input type="number" id="duration" placeholder="Enter number" min="1">
+    <label for="duration">Duration:</label>
+    <input type="number" id="duration" placeholder="Enter number" min="1">
 
-	<select id="unit">
-	  <option value="days" selected>Days</option>
-	  <option value="weeks">Weeks</option>
-	  <option value="months">Months</option>
-	</select>
+    <select id="unit">
+      <option value="days" selected>Days</option>
+      <option value="weeks">Weeks</option>
+      <option value="months">Months</option>
+    </select>
 
-	<label class="checkbox-inline"><input type="checkbox" id="includeStart"> Include start date</label>
+    <label class="checkbox-inline"><input type="checkbox" id="includeStart"> Include start date</label>
 
-	<select id="monthType">
-	  <option value="28">28-day month</option>
-	  <option value="calendar">Calendar month</option>
-	</select>
+    <select id="monthType">
+      <option value="28">28-day month</option>
+      <option value="calendar">Calendar month</option>
+    </select>
 
-	<select id="format">
-	  <option value="dayMon" selected>Day Mon</option>
-	  <option value="ddmmyyyy">DD/MM/YYYY</option>
-	  <option value="iso">ISO YYYY-MM-DD</option>
-	</select>
+    <select id="format">
+      <option value="dayMon" selected>Day Mon</option>
+      <option value="ddmmyyyy">DD/MM/YYYY</option>
+      <option value="iso">ISO YYYY-MM-DD</option>
+    </select>
   </div>
 
   <div id="betweenMode" style="display: none;">
-	<label for="date1">Start Date:</label>
-	<input type="date" id="date1" placeholder="Select first date">
+    <label for="date1">Start Date:</label>
+    <input type="date" id="date1" placeholder="Select first date">
 
-	<label for="date2">End Date:</label>
-	<input type="date" id="date2" placeholder="Select second date">
+    <label for="date2">End Date:</label>
+    <input type="date" id="date2" placeholder="Select second date">
 
-	<label class="checkbox-inline"><input type="checkbox" id="includeEnd"> Include end date</label>
+    <label class="checkbox-inline"><input type="checkbox" id="includeEnd"> Include end date</label>
   </div>
 
-<div class="output-container" id="outputContainer" style="display: none;">
-	<input type="text" id="output" readonly>
-	<span id="copiedText">Copied</span>
-	<button class="copy-btn" onclick="copyOutput()">Copy</button>
+  <div class="output-container" id="outputContainer" style="display: none;">
+    <input type="text" id="output" readonly>
+    <span id="copiedText">Copied</span>
+    <button class="copy-btn" onclick="copyOutput()">Copy</button>
   </div>
 
   <div id="summary"></div>
 
   <button class="calculate" onclick="calculate()">Calculate</button>
-  
-<div class="footer-links">
-	<span>ℹ️ <a href="javascript:void(0)" onclick="openModal('aboutModal')">About</a>  
-	🪲<a href="javascript:void(0)" onclick="openModal('reportModal')">Report a bug</a></span>
+
+  <div class="footer-links">
+    <span>ℹ️ <a href="javascript:void(0)" onclick="openModal('aboutModal')">About</a>  
+    🪲<a href="javascript:void(0)" onclick="openModal('reportModal')">Report a bug</a></span>
   </div>
 
 <!-- About Modal -->
-  <div id="aboutModal" class="modal">
-	<div class="modal-content">
-	  <span class="close" onclick="closeModal('aboutModal')">&times;</span>
-	  <h3>About</h3>
-	  <p>This calculator helps you add days/weeks/months to a date or find the duration between dates. You can also choose a standard 28-day month or calendar month, specify date output format, and easily copy the output.</p>
-	</div>
+<div id="aboutModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+    <h3>About</h3>
+    <p>This calculator helps you add days/weeks/months to a date or find the duration between dates. You can also choose a standard 28-day month or calendar month, specify date output format, and easily copy the output.</p>
   </div>
+</div>
 
 <!-- Report Bug Modal -->
-  <div id="reportModal" class="modal">
-	<div class="modal-content">
-	  <span class="close" onclick="closeModal('reportModal')">&times;</span>
-	  <h3>Report a Bug</h3>
-	  <form name="reportBug" method="POST" data-netlify="true" id="reportForm">
-		<input type="hidden" name="form-name" value="reportBug">
-		<label for="name">Name (optional):</label>
-		<input type="text" id="name" name="name" placeholder="Your name">
-		<label for="message">Message:</label>
-		<textarea id="message" name="message" placeholder="Describe the bug" required></textarea>
-		<button type="submit">Submit</button>
-	  </form>
-	  <p id="formStatus" style="font-size:0.8rem; color:green; display:none;">Thank you! Your report was sent.</p>
-	</div>
+<div id="reportModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('reportModal')">&times;</span>
+    <h3>Report a Bug</h3>
+    <form name="reportBug" method="POST" data-netlify="true" id="reportForm">
+      <input type="hidden" name="form-name" value="reportBug">
+      <label for="name">Name (optional):</label>
+      <input type="text" id="name" name="name" placeholder="Your name">
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" placeholder="Describe the bug" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="formStatus" style="font-size:0.8rem; color:green; display:none;">Thank you! Your report was sent.</p>
   </div>
+</div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-if (window.innerWidth > 480) {  // desktop only
+if (window.innerWidth > 480) {  
   flatpickr("#startDate", { dateFormat: "Y-m-d", disableMobile: false });
   flatpickr("#date1", { dateFormat: "Y-m-d", disableMobile: false });
   flatpickr("#date2", { dateFormat: "Y-m-d", disableMobile: false });
@@ -422,57 +424,57 @@ function calculate() {
   let summary = "";
 
   if (mode === 'add') {
-	const start = new Date(document.getElementById('startDate').value);
-	const duration = parseInt(document.getElementById('duration').value);
-	const includeStart = document.getElementById('includeStart').checked;
-	const unit = document.getElementById('unit').value;
-	const monthType = document.getElementById('monthType').value;
-	const format = document.getElementById('format').value;
+    const start = new Date(document.getElementById('startDate').value);
+    const duration = parseInt(document.getElementById('duration').value);
+    const includeStart = document.getElementById('includeStart').checked;
+    const unit = document.getElementById('unit').value;
+    const monthType = document.getElementById('monthType').value;
+    const format = document.getElementById('format').value;
 
-	if (isNaN(start.getTime()) || isNaN(duration) || duration < 1) {
-	  alert('Please select a valid start date and duration.');
-	  return;
-	}
+    if (isNaN(start.getTime()) || isNaN(duration) || duration < 1) {
+      alert('Please select a valid start date and duration.');
+      return;
+    }
 
-	let end = new Date(start);
-	if (unit === 'days') end.setDate(end.getDate() + duration - (includeStart ? 1 : 0));
-	else if (unit === 'weeks') end.setDate(end.getDate() + duration * 7 - (includeStart ? 1 : 0));
-	else if (unit === 'months') {
-	  if (monthType === '28') end.setDate(end.getDate() + duration * 28 - (includeStart ? 1 : 0));
-	  else {
-		end.setMonth(end.getMonth() + duration);
-		if (!includeStart) end.setDate(end.getDate() - 1);
-	  }
-	}
+    let end = new Date(start);
+    if (unit === 'days') end.setDate(end.getDate() + duration - (includeStart ? 1 : 0));
+    else if (unit === 'weeks') end.setDate(end.getDate() + duration * 7 - (includeStart ? 1 : 0));
+    else if (unit === 'months') {
+      if (monthType === '28') end.setDate(end.getDate() + duration * 28 - (includeStart ? 1 : 0));
+      else {
+        end.setMonth(end.getMonth() + duration);
+        if (!includeStart) end.setDate(end.getDate() - 1);
+      }
+    }
 
-	result = formatDate(end, format);
-	summary = `Start: ${formatDate(start, format)} | Duration: ${duration} ${unit} | End: ${result}`;
+    result = formatDate(end, format);
+    summary = `Start: ${formatDate(start, format)} | Duration: ${duration} ${unit} | End: ${result}`;
 
   } else if (mode === 'between') {
-	const d1 = new Date(document.getElementById('date1').value);
-	const d2 = new Date(document.getElementById('date2').value);
-	const includeEnd = document.getElementById('includeEnd').checked;
+    const d1 = new Date(document.getElementById('date1').value);
+    const d2 = new Date(document.getElementById('date2').value);
+    const includeEnd = document.getElementById('includeEnd').checked;
 
-	if (isNaN(d1.getTime()) || isNaN(d2.getTime())) {
-	  alert('Please select valid start and end dates.');
-	  return;
-	}
+    if (isNaN(d1.getTime()) || isNaN(d2.getTime())) {
+      alert('Please select valid start and end dates.');
+      return;
+    }
 
-	let diffTime = Math.abs(d2 - d1);
-	let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-	if (includeEnd) diffDays += 1;
+    let diffTime = Math.abs(d2 - d1);
+    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (includeEnd) diffDays += 1;
 
-	if (diffDays <= 6) result = `${diffDays} ${diffDays === 1 ? "day" : "days"}`;
-	else if (diffDays === 7) result = "7 days (1 week)";
-	else {
-	  const weeks = Math.floor(diffDays / 7);
-	  const daysRemainder = diffDays % 7;
-	  let breakdown = `${weeks} ${weeks === 1 ? "week" : "weeks"}`;
-	  if (daysRemainder > 0) breakdown += ` + ${daysRemainder} ${daysRemainder === 1 ? "day" : "days"}`;
-	  result = `${diffDays} days (${breakdown})`;
-	}
+    if (diffDays <= 6) result = `${diffDays} ${diffDays === 1 ? "day" : "days"}`;
+    else if (diffDays === 7) result = "7 days (1 week)";
+    else {
+      const weeks = Math.floor(diffDays / 7);
+      const daysRemainder = diffDays % 7;
+      let breakdown = `${weeks} ${weeks === 1 ? "week" : "weeks"}`;
+      if (daysRemainder > 0) breakdown += ` + ${daysRemainder} ${daysRemainder === 1 ? "day" : "days"}`;
+      result = `${diffDays} days (${breakdown})`;
+    }
 
-	summary = `${d1.toDateString()} to ${d2.toDateString()} = ${result}`;
+    summary = `${d1.toDateString()} to ${d2.toDateString()} = ${result}`;
   }
 
   document.getElementById('output').value = result;
@@ -485,9 +487,9 @@ function copyOutput() {
   output.select();
   output.setSelectionRange(0, 99999);
   navigator.clipboard.writeText(output.value).then(() => {
-	const copiedText = document.getElementById('copiedText');
-	copiedText.classList.add("show");
-	setTimeout(() => copiedText.classList.remove("show"), 1500);
+    const copiedText = document.getElementById('copiedText');
+    copiedText.classList.add("show");
+    setTimeout(() => copiedText.classList.remove("show"), 1500);
   });
   window.getSelection().removeAllRanges();
 }
@@ -499,7 +501,6 @@ function addBetweenModeSpacing() {
 
 window.addEventListener('load', () => addBetweenModeSpacing());
 
-// Modal open/close
 function openModal(id) {
   document.getElementById(id).style.display = 'block';
 }
