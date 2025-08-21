@@ -163,6 +163,14 @@ button.calculate { width: 100%; font-size: 0.85rem; margin-top: 12px; }
     pointer-events: none;      /* won’t block button clicks */
     white-space: nowrap;
     margin-bottom: 4px;        /* small gap from button */
+    opacity: 0;                /* start hidden for fade */
+    transition: opacity 0.3s ease-in-out; /* fade animation */
+  }
+
+  /* Show copied text */
+  #copiedText.show {
+    display: block;
+    opacity: 1;
   }
 
   /* Calculate button full width */
@@ -360,10 +368,16 @@ function copyOutput() {
   const output = document.getElementById('output');
   output.select();
   document.execCommand("copy");
+
   const copiedText = document.getElementById('copiedText');
-  copiedText.style.display = 'inline';
-  setTimeout(() => copiedText.style.display = 'none', 1500);
+  copiedText.classList.add("show");        // fade in
+
+  // fade out after 1.5 seconds
+  setTimeout(() => {
+    copiedText.classList.remove("show");   // fade out
+  }, 1500);
 }
+
 </script>
 <script>
 function addBetweenModeSpacing() {
