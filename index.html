@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Date Calculator</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.calculator-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 400px;
+  margin: auto;
+  transition: all 0.2s ease-in-out;
+}
+
+#modeContainer { 
+  padding-top: 12px; 
+  margin-bottom: 12px; 
+}
+
+label {
+  font-size: 0.7rem;
+  display: block;
+}
+
+input, select, button {
+  font-size: 0.9rem;
+  padding: 4px 6px;
+  margin-top: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#addMode #startDate { 
+  margin-bottom: 8px; 
+}
+
+.checkbox-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.checkbox-inline input[type="checkbox"] { 
+  width: auto; 
+  height: auto; 
+  margin: 0; 
+}
+
+#summary {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 12px 0;
+  text-align: left;
+}
+
+button.calculate { 
+  width: 100%; 
+  font-size: 0.85rem; 
+  margin-top: 12px; 
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* Output container: input + button + tooltip */
+#outputContainer {
+  display: none;           
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  position: relative;      
+}
+
+#output {
+  flex: 1 1 auto;
+  font-size: 0.9rem;
+  padding: 4px 6px;
+}
+
+button.copy-btn {
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  width: auto;
+}
+
+#copiedText {
+  position: absolute;
+  bottom: 100%;            
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: green;
+  white-space: nowrap;
+  pointer-events: none;
+  margin-bottom: 4px;
+  opacity: 0;              
+  transition: opacity 0.3s ease-in-out;
+  z-index: 10;
+}
+
+#copiedText.show {
+  opacity: 1;
+}
+
+/* Flatpickr input styling */
+.flatpickr-input {
+  width: 100% !important;
+  box-sizing: border-box;
+  padding: 4px 6px !important;
+  font-size: 0.9rem !important;
+}
+
+input[type="date"] {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 6px 8px;
+  min-height: 38px;        
+  line-height: 1.4;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Footer links */
+.footer-links {
+  font-size: 0.75rem;
+  color: #888;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.footer-links a {
+  color: #555;
+  text-decoration: none;
+  margin: 0 4px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Modals */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.5); 
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 350px;
