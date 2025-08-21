@@ -108,33 +108,18 @@ button.calculate { width: 100%; font-size: 0.85rem; margin-top: 12px; }
   button.copy-btn { order: 2; flex: 0 0 auto; }
   button.calculate { padding: 10px 15px; font-size: 1rem; }
 
-  /* Mobile-only date field width fix (reinstate prior fix) */
+    /* Mobile: make all fields consistent width */
   #startDate,
   #date1,
   #date2,
   #mode {
-    width: calc(100% - 12px);
-    margin-left: 6px;
-    margin-right: 6px;
-    box-sizing: border-box;
-  }
-
-  /* Shift Include start/end day checkboxes slightly right */
-  #includeStart,
-  #includeEnd {
-    margin-left: 6px; /* adjust as desired */
-  }
-  /* Make mobile date fields same width as other inputs */
-  #startDate,
-  #date1,
-  #date2 {
     width: 100%;
     max-width: 100%;
+    margin: 0;
     box-sizing: border-box;
     padding: 8px 10px;
-    margin-left: 0;
-    margin-right: 0;
   }
+
 
 
 
