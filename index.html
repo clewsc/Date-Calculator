@@ -270,6 +270,15 @@ input[type="date"] {
   .footer-links {
     font-size: 0.7rem;
 
+/* Mobile-specific modal adjustments */
+@media (max-width: 480px) {
+  .modal-content {
+    margin: 5% 10%;   /* smaller top margin, add horizontal margin */
+    max-width: none;  /* let it expand but constrained by margins */
+    padding: 16px;    /* optional: slightly smaller padding on mobile */
+  }
+}
+    
 </style>
 </head>
 <body>
