@@ -252,10 +252,29 @@ input[type="date"] {
 
   /* Mobile calculate button */
   button.calculate {
-    font-size: 1rem;     /* slightly larger for touch */
-    padding: 10px;       /* more padding for touch */
+    background-color: #f7f7f7; /* soft, natural gray */
+    border: 1px solid #ccc;
+    color: #000;
+    font-size: 1rem;
+    padding: 10px;
     margin-top: 8px;
-    /* do NOT change background or border color, keep white button */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtle shadow for depth */
+    transition: transform 0.1s ease, box-shadow 0.1s ease; /* smooth press effect */
+  }
+
+  /* Pressed/tap effect */
+  button.calculate:active {
+    transform: scale(0.98);          /* slight shrink */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* slightly reduced shadow */
+    background-color: #f0f0f0;      /* subtle darker shade on press */
+  }
+
+  /* Remove focus outline on mobile */
+  button.calculate:focus {
+    outline: none;
+  }
+}
 	
   .footer-links { font-size: 0.7rem; }
 }
