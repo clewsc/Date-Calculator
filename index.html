@@ -202,17 +202,59 @@ input[type="date"] {
   cursor: pointer;
 }
 
-.modal-content input, 
-.modal-content textarea, 
-.modal-content button {
+.modal-content input,
+.modal-content textarea#message {
   width: 100%;
-  padding: 6px 8px;
-  margin: 6px 0;
   box-sizing: border-box;
+  padding: 6px 8px;          /* same as name input */
+  font-size: 0.9rem;         /* match input */
+  border: 1px solid #ccc;    /* same border color */
+  border-radius: 8px;        /* match input */
+  background-color: #fff;     /* same background */
+  color: #000;               /* text color */
+  resize: vertical;          /* allow vertical resizing */
+  margin-bottom: 12px;       /* space below textarea */
+  font-family: Arial, sans-serif; /* ensure font matches input */
 }
 
-.modal-content button {
-  margin-top: 8px;
+/* Optional: hover/focus effect same as input */
+.modal-content textarea#message:focus {
+  outline: none;
+  border-color: #80aee0;     /* subtle highlight on focus */
+  box-shadow: 0 0 3px rgba(128, 174, 224, 0.5);
+}
+
+/* Extra spacing between name and message fields */
+.modal-content input#name {
+  margin-bottom: 12px; /* adds more space before message */
+}
+
+/* Message textarea */
+.modal-content textarea#message {
+  min-height: 80px; /* reasonable height */
+  resize: vertical; /* allow vertical resize */
+  margin-bottom: 12px; /* space before submit button */
+}
+
+.modal-content label {
+  display: block;       /* ensures the label is on its own line */
+  margin-bottom: 6px;   /* space below label before the field */
+}
+
+.modal-content button[type="submit"] {
+  width: 100%;
+  font-size: 0.85rem;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #000;
+  cursor: pointer;
+}
+
+.modal-content button[type="submit"]:hover {
+  background-color: #f0f0f0;
 }
 
 /* Desktop-specific adjustments */
@@ -273,6 +315,23 @@ input[type="date"] {
 }
 	
   .footer-links { font-size: 0.7rem; }
+}
+
+.modal-content button[type="submit"] {
+    background-color: transparent;
+    border: 1.5px solid #80aee0;
+    color: #005bb5;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  }
+  .modal-content button[type="submit"]:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background-color: #f0f0f0;
+  }
+  .modal-content button[type="submit"]:focus {
+    outline: none;
+  }
 }
 </style>
 </head>
