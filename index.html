@@ -94,31 +94,85 @@ button.copy-btn {
 button.calculate { width: 100%; font-size: 0.85rem; margin-top: 12px; }
 
 @media (max-width: 480px) {
+  /* General input/select/button adjustments */
   input, select, button {
     font-size: 1rem;
     padding: 8px 10px;
   }
 
-  label { margin-top: 14px; }
+  label {
+    margin-top: 14px;
+  }
 
-  /* Output container adjustments stay the same */
-  .output-container { flex-wrap: wrap; }
-  #output { flex: 1 1 100%; margin-right: 0; margin-bottom: 5px; }
-  #copiedText { order: 1; margin: 0 5px 5px 0; }
-  button.copy-btn { order: 2; flex: 0 0 auto; }
-  button.calculate { padding: 10px 15px; font-size: 1rem; }
-
-    /* Mobile: make all fields consistent width */
+  /* Date fields: consistent width and height, native picker */
   #startDate,
   #date1,
   #date2,
-  #mode {
+  #mode,
+  input[type="date"] {
     width: 100%;
     max-width: 100%;
     margin: 0;
     box-sizing: border-box;
-    padding: 8px 10px;
+    padding: 6px 8px;
+    min-height: 38px;       /* matches other inputs */
+    line-height: 1.4;
+    appearance: none;
+    -webkit-appearance: none;
+    font-size: 1rem;
   }
+
+  /* Checkbox alignment */
+  .checkbox-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    margin-top: 12px;
+  }
+
+  /* Output field and copy button on one line */
+  .output-container {
+    display: flex;
+    flex-wrap: nowrap;      /* do not wrap */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  #output {
+    flex: 1 1 auto;         /* fill remaining space */
+    margin: 0;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+  }
+  #copiedText {
+    order: 3;               /* stays after copy button */
+    margin: 0;
+    font-size: 0.8rem;
+    color: green;
+    display: none;
+    white-space: nowrap;
+  }
+  button.copy-btn {
+    flex: 0 0 auto;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  /* Calculate button adjustment */
+  button.calculate {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 15px;
+    margin-top: 12px;
+  }
+}
+
 
 
 
