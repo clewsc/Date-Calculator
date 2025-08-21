@@ -94,14 +94,16 @@ button.copy-btn {
 button.calculate { width: 100%; font-size: 0.85rem; margin-top: 12px; }
 
 @media (max-width: 480px) {
+
   /* General input/select/button adjustments */
   input, select, button {
-    font-size: 1rem !important;
-    padding: 8px 10px !important;
+    font-size: 1rem;
+    padding: 8px 10px;
+    box-sizing: border-box;
   }
 
   label {
-    margin-top: 14px !important;
+    margin-top: 14px;
   }
 
   /* Date fields: consistent width and height, native picker */
@@ -110,66 +112,65 @@ button.calculate { width: 100%; font-size: 0.85rem; margin-top: 12px; }
   #date2,
   #mode,
   input[type="date"] {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-    padding: 6px 8px !important;
-    min-height: 40px !important;      /* matches other inputs */
-    line-height: 1.4 !important;
-    appearance: none !important;
-    -webkit-appearance: none !important;
-    font-size: 1rem !important;
+    width: 100%;
+    padding: 6px 8px;
+    min-height: 40px;  /* matches other inputs */
+    line-height: 1.4;
+    appearance: none;
+    -webkit-appearance: none;
+    font-size: 1rem;
   }
 
   /* Checkbox alignment */
   .checkbox-inline {
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    font-size: 0.9rem !important;
-    margin-top: 12px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    margin-top: 12px;
   }
 
-  /* Output field and copy button on one line */
+  /* Output container: field + button on one line */
   .output-container {
-    display: flex !important;
-    flex-wrap: nowrap !important;      /* prevent wrapping */
-    justify-content: flex-start !important;
-    align-items: center !important;
-    gap: 6px !important;
-    margin-top: 12px !important;
-  }
-  #output {
-    flex: 1 1 auto !important;         /* take remaining space */
-    margin: 0 !important;
-    padding: 6px 8px !important;
-    font-size: 0.9rem !important;
-  }
-  #copiedText {
-    order: 3 !important;               /* stays after copy button */
-    margin: 0 !important;
-    font-size: 0.8rem !important;
-    color: green !important;
-    display: none !important;
-    white-space: nowrap !important;
-  }
-  button.copy-btn {
-    flex: 0 0 auto !important;
-    font-size: 0.8rem !important;
-    padding: 4px 10px !important;
-    border-radius: 6px !important;
-    border: 1px solid #ccc !important;
-    background-color: #fff !important;
-    cursor: pointer !important;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;       /* vertically aligned */
+    gap: 6px;
+    margin-top: 12px;
+    position: relative;        /* needed for absolute "Copied" text */
   }
 
-  /* Calculate button adjustment */
+  #output {
+    flex: 1;                   /* fill remaining space */
+    padding: 6px 8px;
+  }
+
+  button.copy-btn {
+    flex: 0 0 auto;
+    padding: 4px 10px;
+    position: relative;        /* for positioning the tooltip */
+  }
+
+  /* "Copied" message: above copy button, absolute, subtle */
+  #copiedText {
+    position: absolute;
+    bottom: 100%;              /* place above the button */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: green;
+    display: none;
+    pointer-events: none;      /* won’t block button clicks */
+    white-space: nowrap;
+    margin-bottom: 4px;        /* small gap from button */
+  }
+
+  /* Calculate button full width */
   button.calculate {
-    width: 100% !important;
-    font-size: 1rem !important;
-    padding: 10px 15px !important;
-    margin-top: 12px !important;
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 15px;
+    margin-top: 12px;
   }
 }
 
